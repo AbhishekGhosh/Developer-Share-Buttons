@@ -181,13 +181,15 @@ if ( !class_exists( 'DeveloperShareButtons' ) ) {
                 // %2$s = share title
                 // %3$s = share text
                 // %4$s = share image
-                'facebook'    => array( 'id' => 'facebook', 'title' => 'Facebook', 'url_structure' => 'http://www.facebook.com/sharer.php?u=%1$s', 'url_after_title' => false ),
-                'twitter'     => array( 'id' => 'twitter', 'title' => 'Twitter', 'url_structure' => 'http://twitter.com/share?url=%1$s&text=%2$s', 'url_after_title' => true ),
+                'facebook'    => array( 'id' => 'facebook', 'title' => 'Facebook', 'url_structure' => 'https://www.facebook.com/sharer.php?u=%1$s', 'url_after_title' => false ),
+                'twitter'     => array( 'id' => 'twitter', 'title' => 'Twitter', 'url_structure' => 'https://twitter.com/share?url=%1$s&text=%2$s', 'url_after_title' => true ),
                 'google'      => array( 'id' => 'google','title' => 'Google+', 'url_structure' => 'https://plus.google.com/share?url=%1$s', 'url_after_title' => false ),
                 'reddit'      => array( 'id' => 'reddit', 'title' => 'Reddit', 'url_structure' => 'http://reddit.com/submit?url=%1$s&title=%2$s', 'url_after_title' => false ),
                 'linkedin'    => array( 'id' => 'linkedin', 'title' => 'LinkedIn', 'url_structure' => 'http://www.linkedin.com/shareArticle?mini=true&url=%1$s', 'url_after_title' => false ),
                 'stumbleupon' => array( 'id' => 'stumbleupon', 'title' => 'StumbleUpon', 'url_structure' => 'http://www.stumbleupon.com/submit?url=%1$s&title=%2$s', 'url_after_title' => false ),
-                'pinterest'   => array( 'id' => 'pinterest', 'title' => 'Pinterest', 'url_structure' => 'http://pinterest.com/pin/create/button/?url=%1$s&media=%4$s', 'url_after_title' => false ),
+                'pinterest'   => array( 'id' => 'pinterest', 'title' => 'Pinterest', 'url_structure' => 'https://www.pinterest.com/pin/find/?url=%1$s', 'url_after_title' => false ),
+                // &media not required with /find/
+                // use https
                 'instagram'   => array( 'id' => 'instagram', 'title' => 'Instagram', 'url_structure' => false, 'url_after_title' => false ),
                 'github'      => array( 'id' => 'github', 'title' => 'GitHub', 'url_structure' => false, 'url_after_title' => false )
             );
@@ -351,7 +353,7 @@ if ( !class_exists( 'DeveloperShareButtons' ) ) {
                     $attributes  = 'class="' . static::$slug . '-link ' . static::$slug . '-link--' . $service_id .'" ';
                     $attributes .= 'href="' . $service_link['url'] . '" ';
                     if ( static::is_rel_me() ) {
-                        $attributes .= 'rel="me" ';
+                        $attributes .= 'rel="nofollow" ';
                     }
                     $html .= '<a ' . $attributes . '><span class="' . static::$slug . '-link__text ' . static::$slug . '-link--' . $service_id .'__text">' . $service_link['title'] . '</span></a> ';
                 }
@@ -362,7 +364,7 @@ if ( !class_exists( 'DeveloperShareButtons' ) ) {
                 return false;
             }
         }
-
+// google do not count authorship anymore, hence add rel=nofollow
         /**
          * Checks to see if the rel="me" option is enabled
          * @return boolean
